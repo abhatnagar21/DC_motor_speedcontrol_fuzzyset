@@ -1,0 +1,55 @@
+import time
+
+class PIDController:
+    def __init__(self, Kp, Ki, Kd, setpoint):
+        self.Kp = Kp
+        self.Ki = Ki
+        self.Kd = Kd
+        self.setpoint = setpoint
+        self.prev_error = 0
+        self.integral = 0
+
+    def update(self, current_value):
+        error = self.setpoint - current_value
+        self.integral += error
+        derivative = error - self.prev_error
+        output = self.Kp * error + self.Ki * self.integral + self.Kd * derivative
+        self.prev_error = error
+        return output
+
+class DCMotor:
+    def __init__(self):
+        self.speed = 0
+    
+    def set_voltage(self, voltage):
+        # Simulate motor behavior by adjusting speed
+        self.speed += voltage * 0.01  # Adjust speed based on voltage (example behavior)
+        return self.speed
+
+# Constants for PID controller
+Kp = 0.1
+Ki = 0.01
+Kd = 0.01
+setpoint = 100  # Desired speed (adjust as needed)
+
+# Initialize PID controller
+pid_controller = PIDController(Kp, Ki, Kd, setpoint)
+
+# Initialize DC motor
+dc_motor = DCMotor()
+
+# Simulation loop
+for _ in range(100):
+    # Measure current speed (in a real application, you would use actual sensors)
+    current_speed = dc_motor.speed
+    
+    # Use PID controller to compute voltage adjustment
+    voltage_adjustment = pid_controller.update(current_speed)
+    
+    # Apply voltage adjustment to the motor
+    new_speed = dc_motor.set_voltage(voltage_adjustment)
+    
+    print("Desired Speed:", setpoint, "RPM | Current Speed:", current_speed, "RPM | Voltage Adjustment:", voltage_adjustment)
+    
+    # Simulate some delay (e.g., representing motor response time)
+    time.sleep(0.1)
