@@ -24,10 +24,12 @@ An instance of the PID controller (pid_controller) and the DC motor (dc_motor) a
 In the simulation loop, the current speed of the motor is measured 
 The PID controller is used to compute the voltage adjustment required to achieve the desired speed.
 The computed voltage adjustment is applied to the motor using the set_voltage method.
+
+
 The loop prints out the desired speed, current speed, and voltage adjustment for each iteration.
 A small delay is introduced in each iteration to simulate the motor's response time.
 
-Output:
+5. Output:
 
 During each iteration of the loop, the desired speed, current speed, and voltage adjustment are printed to the console.
 This allows us to observe how the PID controller adjusts the voltage to control the motor's speed towards the desired setpoint.
